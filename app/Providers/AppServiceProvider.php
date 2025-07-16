@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('post.create', function ($user) {
-            return $user->role === 'admin' || $user->role === 'editor';
+            return $user->role === 'admin' || $user->role === 'user';
         });
 
         Gate::define('post.delete', function ($user, $post) {

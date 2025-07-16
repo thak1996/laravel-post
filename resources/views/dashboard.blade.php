@@ -5,14 +5,25 @@
         </h2>
     </x-slot>
 
-    @can('post.create')
+    @empty($posts->count())
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-6 text-gray-900">
-            <x-button color="blue" text="Create Post" />
+            <p>No posts available.</p>
+            @can('post.create')
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-6 text-gray-900">
+                    <x-button color="red" text="Create Post" href="{{ route('post.createPost') }}" />
+                </div>
+            @endcan
         </div>
-    @endcan
+    @else
+        @can('post.create')
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-6 text-gray-900">
+                <x-button color="red" text="Create Post" href="{{ route('post.createPost') }}" />
+            </div>
+        @endcan
+        @foreach ($posts as $post)
+            <x-post-component :post="$post" />
+        @endforeach
+    @endempty
 
-    @foreach ($posts as $post)
-        <x-post-component :post="$post" />
-    @endforeach
 
 </x-app-layout>
